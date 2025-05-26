@@ -1,56 +1,34 @@
 <?php
 
-// namespace NeuronAI\Agent;
+declare(strict_types=1);
+namespace App\Agent;
 
 use NeuronAI\Agent;
-use NeuronAI\SystemPrompt;
 use NeuronAI\Providers\AIProviderInterface;
-use NeuronAI\Providers\Anthropic\Anthropic;
-use NeuronAI\Tools\Tool;
-use NeuronAI\Tools\ToolProperty;
+use NeuronAI\Providers\OpenAI\OpenAI;
+use NeuronAI\SystemPrompt;
 
-class YouTubeAgent extends Agent
+class AstroAgent extends Agent
 {
     public function provider(): AIProviderInterface
     {
-        return new Anthropic(
-            key: 'ANTHROPIC_API_KEY',
-            model: 'ANTHROPIC_MODEL',
+        return new OpenAI(
+            key: $_ENV['OPENAI_API_KEY'] ?? '',
+            model: 'gpt-4.1',
         );
     }
 
     public function instructions(): string
     {
-        return new SystemPrompt(
-            background: ["You are an AI Agent specialized in writing YouTube video summaries."],
+        $prompt = new SystemPrompt(
+            background: ["You are an expert in astronomy and astrophysics. You can answer questions about celestial bodies, space phenomena, and the universe."],
             steps: [
-                "Get the url of a YouTube video, or ask the user to provide one.",
-                "Use the tools you have available to retrieve the transcription of the video.",
-                "Write the summary.",
+                "You will receive a question about astronomy.",
+                "Provide a detailed and accurate answer based on your knowledge.",
+                "If you don't know the answer, politely inform the user that you cannot provide an answer at this time.",
             ],
-            output: [
-                "Write a summary in a paragraph without using lists. Use just fluent text.",
-                "After the summary add a list of three sentences as the three most important take away from the video.",
-            ]
+            output: ["Your response should be clear, concise, and informative. Use appropriate terminology and provide explanations where necessary."],
         );
-    }
-
-    public function tools(): array
-    {
-        return [
-            Tool::make(
-                'get_transcription',
-                'Retrieve the transcription of a youtube video.',
-            )->addProperty(
-                new ToolProperty(
-                    name: 'video_url',
-                    type: 'string',
-                    description: 'The URL of the YouTube video.',
-                    required: true
-                )
-            )->setCallable(function (string $video_url) {
-                // ... retrieve the video transcription
-            })
-        ];
+        return (string) $prompt; // or $prompt->render() if that's the correct method
     }
 }
