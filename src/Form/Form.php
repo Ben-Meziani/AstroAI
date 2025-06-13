@@ -13,7 +13,11 @@ class Form extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom_de_lastre', TypeTextType::class)
+            ->add('nom_de_lastre', TypeTextType::class,
+                [
+                    'label' => "Nom de l'astre"
+                ]
+            )
             ->add('rechercher', SubmitType::class)
         ;
     }

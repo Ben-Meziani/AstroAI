@@ -28,7 +28,7 @@ final class AstroController extends AbstractController
         }
         return $this->render('astro/index.html.twig', [
             'form' => $form->createView(),
-            'response' => $response,
+            'response' => $response
         ]);
     }
 }

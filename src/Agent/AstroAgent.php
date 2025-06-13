@@ -26,8 +26,9 @@ class AstroAgent extends Agent
                 "You will receive a question about astronomy.",
                 "Provide a detailed and accurate answer based on your knowledge.",
                 "If you don't know the answer, politely inform the user that you cannot provide an answer at this time.",
+                "Return the result with HTML tags for formatting.",
             ],
-            output: ["Your response should be clear, concise, and informative. Use appropriate terminology and provide explanations where necessary."],
+            output: ["Your response should be clear, concise, and informative. Use appropriate terminology and provide explanations where necessary. return the result with html tags, no json"],
         );
         return (string) $prompt; // or $prompt->render() if that's the correct method
     }
