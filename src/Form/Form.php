@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType as TypeTextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,6 +17,20 @@ class Form extends AbstractType
             ->add('nom_de_lastre', TypeTextType::class,
                 [
                     'label' => "Nom de l'astre"
+                ]
+            )
+            ->add('language', ChoiceType::class,
+                [
+                    'label' => 'Langue',
+                    'choices' => [
+                        'Français' => 'french',
+                        'English' => 'english',
+                        'Español' => 'spanish',
+                        'Italiano' => 'italian',
+                        'Português' => 'portuguese',
+                        'Русский' => 'russian',
+                        'Deutsch' => 'german',
+                    ],
                 ]
             )
             ->add('rechercher', SubmitType::class)

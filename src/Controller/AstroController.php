@@ -22,7 +22,8 @@ final class AstroController extends AbstractController
         if( $form->isSubmitted() && $form->isValid()) {
             // Handle the form submission, e.g., process the data
             $data = $form->getData();
-            $message = new UserMessage($data['nom_de_lastre']);
+            $data = 'speak about ' . $data['nom_de_lastre']  . ' in ' . $data['language'];
+            $message = new UserMessage($data);
             $agent = AstroAgent::make();
             $response = $agent->chat($message)->getContent();
         }
